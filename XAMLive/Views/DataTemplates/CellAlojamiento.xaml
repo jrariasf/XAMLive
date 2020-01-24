@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converter="clr-namespace:XAMLive.Views"
+             mc:Ignorable="d"
+             x:Class="XAMLive.Views.DataTemplates.CellAlojamiento" >
+
+    <ViewCell.View>
+
+        <StackLayout Margin="0,5,0,0" Padding="0" Spacing="2" BackgroundColor="#F5ED9F"  >
+            <StackLayout.Resources>
+                <ResourceDictionary>
+                    <converter:StringNullOrEmptyBoolConverter x:Key="labelVisible" />
+                </ResourceDictionary>
+            </StackLayout.Resources>
+            
+            <Grid ColumnSpacing="5" BackgroundColor="#F5B76B" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="{Binding tipo}"  HorizontalOptions="FillAndExpand" TextColor="Green" Grid.Column="0" />
+                <Label x:Name="subTipoLabel" Text="{Binding subTipo}"  HorizontalOptions="FillAndExpand"  TextColor="black"  Grid.Column="1" 
+                       IsVisible="{Binding Source={x:Reference subTipoLabel}, Path=Text, Converter={StaticResource labelVisible}}" />
+                <Label Text="{Binding nombreAlojamiento}" Grid.Column="2" TextColor="#D20C24"  />
+                <Label Text="{Binding precio}"  HorizontalOptions="FillAndExpand" Grid.Column="3"  />
+                <Label Text="€" HorizontalOptions="FillAndExpand" Grid.Column="4" Padding="-5,0,0,0" />
+            </Grid>
+
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Dir:"  VerticalTextAlignment="Start" />
+                <Label Text="{Binding direccion}"  HorizontalOptions="FillAndExpand" />
+                <Label Text="Tel:"  HorizontalOptions="End" />
+                <Label Text="{Binding telefono1}"  HorizontalOptions="FillAndExpand" />
+                <Label Text="Plazas:"  VerticalTextAlignment="Center" HorizontalTextAlignment="End"/>
+                <Label Text="{Binding numPlazas}"  VerticalTextAlignment="Center" />
+
+            </StackLayout>
+
+
+            <Grid ColumnSpacing="15" RowSpacing="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="19" />
+                    <RowDefinition Height="19" />
+                    <RowDefinition Height="19" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+
+
+                <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
+                    <CheckBox IsChecked="{Binding lavadero}" Scale="0.5"  />
+                    <Label Text="lavadero" VerticalTextAlignment="Center"  />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1" >
+                    <CheckBox IsChecked="{Binding lavadora}" Scale="0.5" />
+                    <Label Text="lavadora" VerticalTextAlignment="Center"  />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="2" >
+                    <CheckBox IsChecked="{Binding secadora}" Scale="0.5" />
+                    <Label Text="secadora" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="3" >
+                    <CheckBox IsChecked="{Binding calefaccion}" Scale="0.5" />
+                    <Label Text="calefaccion" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
+                    <CheckBox IsChecked="{Binding cocina}" Scale="0.5" />
+                    <Label Text="cocina" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
+                    <CheckBox IsChecked="{Binding microondas}" Scale="0.5" />
+                    <Label Text="microondas" VerticalTextAlignment="Center"  />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="2" >
+                    <CheckBox IsChecked="{Binding frigorifico}" Scale="0.5" />
+                    <Label Text="frigorifico" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="3" >
+                    <CheckBox IsChecked="{Binding maquinaBebidas}" Scale="0.5" />
+                    <Label Text="maquinaBebidas" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
+                    <CheckBox IsChecked="{Binding jardin}" Scale="0.5" />
+                    <Label Text="jardin" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" >
+                    <CheckBox IsChecked="{Binding bicis}" Scale="0.5" />
+                    <Label Text="bicis" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="2" >
+                    <CheckBox IsChecked="{Binding mascotas}" Scale="0.5" />
+                    <Label Text="mascotas" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="3" >
+                    <CheckBox IsChecked="{Binding wifi}" Scale="0.5" />
+                    <Label Text="wifi" VerticalTextAlignment="Center" />
+                </StackLayout>
+
+            </Grid>
+
+        </StackLayout>
+    </ViewCell.View>
+</ViewCell>
+
+    
+    
+    
+<!--
+    <StackLayout Orientation="Horizontal" HeightRequest="40" >
+        <Label Text="observaciones:"  VerticalTextAlignment="Center" MinimumWidthRequest="80"/>
+        <Editor Text="{Binding observaciones}"  HorizontalOptions="FillAndExpand" MaxLength="300" />
+    </StackLayout>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Button Text="Save" 
+                    Clicked="OnSaveButtonClicked" />
+        <Button Grid.Column="1"
+                    Text="Delete" 
+                    Clicked="OnDeleteButtonClicked"/>
+    </Grid>
+--> 

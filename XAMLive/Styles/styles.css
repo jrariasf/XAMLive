@@ -1,0 +1,35 @@
+﻿
+^ContentPage {
+  background-color: blue;
+  margin: 20
+}
+
+stacklayout {
+    background-color: #F5F2BD;
+    -xf-spacing: 2;
+}
+
+stacklayout>stacklayout {
+    background-color: orange;
+}
+
+label, entry, editor {
+    font-size: caption;
+}
+
+label {
+    background-color: orange; 
+    color: black;
+}
+
+
+entry {
+    background-color: yellow; 
+}
+
+
+checkbox {
+    background-color: blue;
+    color: red;
+    transform: scale(0.6);
+}
