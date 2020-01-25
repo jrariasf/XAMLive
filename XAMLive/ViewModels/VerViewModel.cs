@@ -18,9 +18,10 @@ namespace XAMLive.ViewModels
         public string nombreAlojamiento { get; set; }
     }
 
-    class RespPoblaciones
-    {
+    public class RespPoblaciones
+    {        
         public int idPoblacion { get; set; }
+        public string nombrePoblacion { get; set; }       
     }
     public class VerViewModel : BindableBase, INavigationAware
     {
@@ -34,8 +35,8 @@ namespace XAMLive.ViewModels
         }
 
        
-        private ObservableCollection<string> _poblacionesConAlojamiento;
-        public ObservableCollection<string> poblacionesConAlojamiento
+        private ObservableCollection<RespPoblaciones> _poblacionesConAlojamiento;
+        public ObservableCollection<RespPoblaciones> poblacionesConAlojamiento
         {
             get { return _poblacionesConAlojamiento; }
             set { SetProperty(ref _poblacionesConAlojamiento, value); }
@@ -56,7 +57,21 @@ namespace XAMLive.ViewModels
         }
 
         public int idPoblacionActual = -1;
-        
+
+        private int _IndexValue;
+        public int IndexValue
+        {
+            get { return _IndexValue; }
+            set { SetProperty(ref _IndexValue, value); }
+        }
+
+        private RespPoblaciones _SelectedPoblacion;
+        public RespPoblaciones SelectedPoblacion
+        {
+            get { return _SelectedPoblacion; }
+            set { SetProperty(ref _SelectedPoblacion, value); }
+        }
+
         private string _nombreBoton;
         public string nombreBoton
         {
@@ -78,25 +93,44 @@ namespace XAMLive.ViewModels
             _ordenarPor ?? (_ordenarPor = new DelegateCommand<string>(ExecuteOrdenarPor));
 
         // Para registrar los cambios en el desplegable Población:
-        private DelegateCommand<string> _SelectedPoblationChanged;
-        public DelegateCommand<string> SelectedPoblationChanged =>
-            _SelectedPoblationChanged ?? (_SelectedPoblationChanged = new DelegateCommand<string>(ExecuteSelectedPoblationChanged));
+        private DelegateCommand<RespPoblaciones> _SelectedPoblationChanged;
+        public DelegateCommand<RespPoblaciones> SelectedPoblationChanged =>
+            _SelectedPoblationChanged ?? (_SelectedPoblationChanged = new DelegateCommand<RespPoblaciones>(ExecuteSelectedPoblationChanged));
 
-        void ExecuteSelectedPoblationChanged(string parameter)
+        void ExecuteSelectedPoblationChanged(RespPoblaciones parameter)
         {
-            Console.WriteLine("DEBUG - VerVM - ExecuteSelectedPoblationChanged()  parameter:{0}", parameter);
-            //Console.WriteLine("DEBUG - VerVM - ExecuteSelectedPoblationChanged()  picker.Title: {0}  picker.SelectedIndex: {1}   picker.valor: {2}",
-            //          MyPicker.Title, MyPicker.SelectedIndex, MyPicker.Items[MyPicker.SelectedIndex]);
+            Console.WriteLine("DEBUG - VerVM - ExecuteSelectedPoblationChanged() - entrar...  idPoblacionActual:{0}", idPoblacionActual);
+
+#if DEBUG
+            Console.WriteLine("DEBUG - VerVM - ExecuteSelectedPoblationChanged() - entrar...");
+
+            if (parameter == null)
+            {
+                if (SelectedPoblacion == null)
+                    Console.WriteLine("DEBUG - VerVM - ExecuteSelectedPoblationChanged() - parameter y " +
+                        "SelectedPoblacion son null. No ohacemos nada");
+                else
+                {
+                    Console.WriteLine("DEBUG - VerVM - ExecuteSelectedPoblationChanged() - parameter es null - " +
+                        "SelectedPoblacion ---> idPoblacion:{0}  nombrePoblacion:{1}",
+                     SelectedPoblacion.idPoblacion, SelectedPoblacion.nombrePoblacion);
+                }
+            } else
+            {
+                Console.WriteLine("DEBUG - VerVM - ExecuteSelectedPoblationChanged()  parameter --> idPoblacion:{0}   nombrePoblacion:{1}",
+                               parameter.idPoblacion, parameter.nombrePoblacion);
+            }
+#endif
+
+
             /*
             int entero = 0;
             if (parameter.HasValue)
                 entero = parameter.Value;
             */
-            idPoblacionActual = int.Parse(parameter == null ? "-1" : parameter);
+            idPoblacionActual = parameter == null ? (SelectedPoblacion == null ? idPoblacionActual : SelectedPoblacion.idPoblacion) : parameter.idPoblacion;
             List<TablaALOJAMIENTOS> miLista = App.Database.GetAlojamientosByCity(idPoblacionActual);
-            listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(miLista);
-
-            //listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(listaAlojamientos.OrderBy(x => x.nombreAlojamiento));
+            listaAlojamientos = new ObservableCollection<TablaALOJAMIENTOS>(miLista);       
 
         }
 
@@ -180,34 +214,42 @@ namespace XAMLive.ViewModels
             ordenAscendente = false;
             nombreBoton = "Pulsa ya coñññioooo";
 
+            IndexValue = 5;
+
             Console.WriteLine("CONSTR - VerViewModel()  idPoblacionActual:{0}", idPoblacionActual);
 
-            // Para el Picker que contiene el listado de poblaciones con albergue:
-            poblacionesConAlojamiento = new ObservableCollection<string>();
-
-                    /*
-                    poblacionesConAlojamiento.Add("1");
-                    poblacionesConAlojamiento.Add("37");
-                    poblacionesConAlojamiento.Add("66");
-                    poblacionesConAlojamiento.Add("100");
-                    poblacionesConAlojamiento.Add("300");
-                    */
-           
-            string query = "select distinct(idPoblacion) from TablaALOJAMIENTOS";           
-            PedirIdPoblacionesQueryAsync(query);
+            // Cargamos el Picker con las poblaciones que tienen alojamientos:
+            CargarPoblacionesQueryAsync();
             
 
         }
 
         //async IEnumerable<int> EjecutaQueryAsync(string query)
-        async void PedirIdPoblacionesQueryAsync(string query)
+        async void CargarPoblacionesQueryAsync()
         {
+            /*
+            string query = "select distinct(idPoblacion) from TablaALOJAMIENTOS"; 
             List<RespPoblaciones> miLista = await App.Database._database.QueryAsync<RespPoblaciones>(query);
             
             foreach (RespPoblaciones reg in miLista)
             {
                 poblacionesConAlojamiento.Add(reg.idPoblacion.ToString());
             }
+            */
+
+            // Para el Picker que contiene el listado de poblaciones con albergue:
+            /*
+            poblacionesConAlojamiento = new ObservableCollection<RespPoblaciones>();
+            poblacionesConAlojamiento.Add("1");
+            poblacionesConAlojamiento.Add("37");
+            poblacionesConAlojamiento.Add("66");
+            poblacionesConAlojamiento.Add("100");
+            poblacionesConAlojamiento.Add("300");
+            */
+
+            string query = "select distinct(idPoblacion), nombrePoblacion from TablaALOJAMIENTOS INNER JOIN TablaPOBLACIONES ON TablaPOBLACIONES.id = TablaALOJAMIENTOS.idPoblacion";
+            List<RespPoblaciones> miLista = await App.Database._database.QueryAsync<RespPoblaciones>(query);
+            poblacionesConAlojamiento = new ObservableCollection<RespPoblaciones>(miLista);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)

@@ -58,8 +58,12 @@
                 <Button Text="Query" Command="{Binding EjecutarQuery}" CommandParameter="toma query" FontSize="12" Padding="0" Margin="0" WidthRequest="50" ></Button>
                 <Button Text="Reset" Command="{Binding Recargar}" CommandParameter="toma query" FontSize="12" Padding="0" Margin="0" WidthRequest="50" ></Button>
 
-                <Picker x:Name="MyPicker" Title="Población"   HorizontalOptions="End" TextColor="Red" TitleColor="Red"
-                        SelectedIndex="25"  ItemsSource="{Binding poblacionesConAlojamiento}">
+                <Picker x:Name="MyPicker" Title="Población"   HorizontalOptions="End" FontSize="14" WidthRequest="190"  TextColor="Red" TitleColor="Red"
+                        SelectedIndex="{Binding IndexValue, Mode=TwoWay}"
+                        ItemsSource="{Binding poblacionesConAlojamiento}"
+                        ItemDisplayBinding="{Binding nombrePoblacion}" 
+                        SelectedItem="{Binding SelectedPoblacion, Mode=TwoWay}" >
+                    
                     <!--SelectedIndexChanged="{Binding OnPickerSelectedIndexChanged}">
                     <Picker.Items>
                         <x:String>1</x:String>
