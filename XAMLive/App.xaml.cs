@@ -7,6 +7,7 @@ using Xamarin.Forms.Xaml;
 using System;
 using XAMLive.Data;
 using System.IO;
+using System.Reflection;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace XAMLive
@@ -49,13 +50,36 @@ namespace XAMLive
         {
             InitializeComponent();
             Console.WriteLine("DEBUG - AppOnInitialized()");
-            await NavigationService.NavigateAsync("NavigationPage/Ver?listado=albergues&idPoblacion=100");
+            await NavigationService.NavigateAsync("NavigationPage/MisCaminos");
+
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<Ver, VerViewModel>();
+            //containerRegistry.RegisterForNavigation<Ver, VerViewModel>();
+            containerRegistry.RegisterForNavigation<MisCaminos, MisCaminosViewModel>();
+        }
+    }
+
+    [ContentProperty(nameof(Source))]
+    public class ImageResourceExtension : IMarkupExtension
+    {
+        public string Source { get; set; }
+
+        public object ProvideValue(IServiceProvider serviceProvider)
+        {
+            Console.WriteLine("DEBUG - ImageResourceExtension - ProvideValue  Source <{0}>", Source == null ? "NULL" : Source);
+
+            if (Source == null)
+            {
+                return null;
+            }
+
+            // Do your translation lookup here, using whatever method you require
+            var imageSource = ImageSource.FromResource(Source, typeof(ImageResourceExtension).GetTypeInfo().Assembly);
+
+            return imageSource;
         }
     }
 }

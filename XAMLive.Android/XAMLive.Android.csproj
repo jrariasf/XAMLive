@@ -70,9 +70,9 @@
       <Version>2.1.73</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
-      <Version>1.6.292</Version>
+      <Version>1.7.335</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991477" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.3" />

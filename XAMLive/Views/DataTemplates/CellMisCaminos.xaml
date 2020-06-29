@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:XAMLive.ViewModels"
+             mc:Ignorable="d"
+             x:Class="XAMLive.Views.DataTemplates.CellMisCaminos">
+
+    <ViewCell.View>
+
+        <FlexLayout Direction="Row" >
+            <FlexLayout.Resources>
+                <ResourceDictionary>
+                    <viewModels:DameImageSourceConverter x:Key="dameImageSourceConverter" />
+                </ResourceDictionary>
+            </FlexLayout.Resources>
+
+            <!-- <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand" BackgroundColor="Orange" FlexLayout.Grow="1" > -->
+            <FlexLayout Direction="Column" BackgroundColor="Orange" FlexLayout.Grow="1" >
+                <FlexLayout Direction="Row" FlexLayout.Grow="1">
+                    <FlexLayout Direction="Row"  FlexLayout.Grow="1" Padding="0" >
+                        <Label Text="{Binding id,StringFormat='{0}.-'}" />
+                        <Label x:Name="id" Text="{Binding id}" IsEnabled="False" IsVisible="False" />
+                        <Label Text="{Binding miNombreCamino}" FlexLayout.Grow="1" BackgroundColor="Yellow"
+                            FontSize="Small" FontAttributes="Bold" TextColor="#2028F5" 
+                            Margin="0" Padding="4,0,0,0" />
+                        <Label Text="{Binding caminoBase,StringFormat='({0})'}" Padding="4,0,0,0" FlexLayout.Grow="0"  BackgroundColor="Cyan"/>
+                        <Label Text="{Binding dia,StringFormat='{0:dd/MM/yyyy}'}" Padding="4,0,0,0" HorizontalOptions="End"/>
+                    </FlexLayout>
+
+                    <Grid ColumnSpacing="0" BackgroundColor="Green" Margin="0" Padding="0" WidthRequest="60" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="{Binding numDias}" Grid.Column="0" HorizontalOptions="End" />
+                        <Label Text="{Binding numEtapas}" Grid.Column="1" HorizontalOptions="End" BackgroundColor="Yellow" />
+                        <Label Text="{Binding longitud, StringFormat='{0:F0}'}" Grid.Column="2" HorizontalOptions="End" BackgroundColor="red" />
+                    </Grid>
+                </FlexLayout>
+
+                <StackLayout Orientation="Vertical" BackgroundColor="Brown"  FlexLayout.Grow="1">
+                    <Label Text="{Binding descripcion,StringFormat='Descripción: {0}'}" HorizontalOptions="Start" FontSize="Caption" Padding="20,0,0,0" />
+                    <!--
+                    <Label Text="{Binding bifurcaciones}" />
+                    <Label Text="{Binding etapas}" />
+                    -->
+                </StackLayout>
+            </FlexLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="Start" BackgroundColor="Cyan" Margin="6,0,0,0" Padding="0" HeightRequest="25" WidthRequest="90">
+                <ImageButton Source="{Binding ., Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_boton_etapas}"
+                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=VerEtapasMiCamino}" 
+                             CommandParameter="{Binding Text, Source={x:Reference id}}"
+                             Padding="0" Margin="0"   VerticalOptions="Start" BackgroundColor="Black" />
+                
+                <ImageButton Source="{Binding ., Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_boton_listado}"               
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=AmpliarMiCamino}" 
+                    CommandParameter="{Binding Text, Source={x:Reference id}}" 
+                    Padding="0" Margin="0"  VerticalOptions="Start"  BackgroundColor="green" />
+
+                <ImageButton Source="{Binding ., Converter={StaticResource dameImageSourceConverter}, ConverterParameter=ic_boton_delete}"                
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MisCaminosViewModel}}, Path=BorrarMiCamino}" 
+                    CommandParameter="{Binding Text, Source={x:Reference id}}" 
+                    Padding="0" Margin="0"  VerticalOptions="Start" />
+
+            </StackLayout>
+
+
+        </FlexLayout>
+
+    </ViewCell.View>
+</ViewCell>    

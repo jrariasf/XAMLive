@@ -10,11 +10,10 @@ using Xamarin.Forms.Xaml;
 namespace XAMLive.Views.DataTemplates
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CellAlojamiento : ViewCell
+    public partial class CellMisCaminos : ViewCell
     {
-        public CellAlojamiento()
+        public CellMisCaminos()
         {
-            Console.WriteLine("CONSTR - CellAlojamiento()");
             InitializeComponent();
         }
     }
